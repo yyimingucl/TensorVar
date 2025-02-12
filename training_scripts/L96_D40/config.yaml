@@ -1,0 +1,22 @@
+obs_dim: 8
+history_len: 10
+state_dim: 40
+seq_length: 8
+obs_feature_dim: [16, 32, 32, 64, 64, 80]
+hist_feature_dim: [16, 16, 32, 64]
+state_feature_dim: [512, 256, 128, 128, 80]
+cov_kernel_size: [5, 3, 3, 3]
+padding: [2, 1, 1, 1]
+pooling_size: 2
+position_encoding: True
+rate: [1.0, 0.8, 0.6]
+
+
+# training parameters
+batch_size: 32
+learning_rate: 0.00005
+num_epochs: 50 # 10
+decay_rate: 0.5
+decay_step: 50 # 10
+lamb: 0.5
+nu: 0.05
