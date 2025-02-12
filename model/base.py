@@ -242,6 +242,30 @@ class forward_model(nn.Module):
             save_path_B = save_path + '/' + 'B.pt'
             print('[INFO] save B to: ', save_path_B)
             torch.save(B, save_path_B)
+
+    def compute_z_b(self, dynamics_dataset:torch.utils.data.Dataset, device:str='cpu', save_path:str=None):
+        N = len(dynamics_dataset)
+        z_b = torch.zeros((N, self.hidden_dim)).to(device)
+        BS = 32
+        assert dynamics_dataset.seq_length == 1, "The sequence length of the dataset should be 1"
+        
+        dataloader = torch.utils.data.DataLoader(dynamics_dataset, batch_size=BS, shuffle=False)
+        
+        with torch.no_grad():
+            for i, batch_data in enumerate(dataloader):
+                state, _ = batch_data
+                state = state.squeeze(1)
+                bs = state.shape[0]
+                
+                state = state.to(device)
+                state_feature = self.phi_S(state)
+                for j in range(bs):
+                    z_b[i*bs+j] = state_feature[j]
+        z_b = z_b.mean(dim=0)
+        if save_path is not None:
+            save_path_z_b = save_path + '/' + 'z_b.pt'
+            print('[INFO] save z_b to: ', save_path_z_b)
+            torch.save(z_b, save_path_z_b)
             
             
 
@@ -361,7 +385,7 @@ class inverse_model(nn.Module):
              save_path_R = save_path + '/' + 'R.pt' 
              print('[INFO] save R to: ', save_path_R)    
              torch.save(R, save_path_R)
-             
+
 
 
 class inverse_model_2D(nn.Module):
