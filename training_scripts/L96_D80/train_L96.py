@@ -55,6 +55,7 @@ forward_model.load_state_dict(torch.load(model_save_folder + '/' + 'forward_mode
 forward_model.C_fwd = torch.load(model_save_folder + '/' + 'C_fwd.pt')
 forward_model.to(device)
 dynamics_dataset = DA_Dynamics_Dataset(state=seq_state, seq_length=1)
+forward_model.compute_z_b(dynamics_dataset, device=device, save_path=model_save_folder)
 forward_model.compute_Q_B(dynamics_dataset, device=device, save_path=model_save_folder)
 del dynamics_dataset
 

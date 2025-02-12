@@ -1,0 +1,13 @@
+history_len: 10
+
+# training parameters
+batch_size: 12
+learning_rate: 0.0005
+num_epochs: 100
+decay_rate: 0.5
+decay_step: 20
+lamb: 0.5
+nu: 0.0
+
+
+
