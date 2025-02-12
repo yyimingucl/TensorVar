@@ -1,4 +1,5 @@
 history_len: 10
+seq_length: 12
 
 # training parameters
 batch_size: 12
