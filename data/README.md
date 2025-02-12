@@ -1,8 +1,6 @@
 # Data 
 
-This folder contains the data files for the Tensor-Var project. Download the data from the URL below to the corresponding folder
-
-## Contents
+This folder contains the data files for the Tensor-Var project. Download the data from the URL below to the corresponding folder.
 
 |    |Data shape|URL|Size|Contents|
 |---------|---------|---------|---------|---------|
