@@ -38,7 +38,7 @@ data_save_path = '../../data/ERA5_data/train_seq_state.h5'
 dynamics_dataset = ERA5_Dynamics_Dataset(data_path=data_save_path, seq_length=config.seq_length)
 weight_matrix = np.load("../../data/ERA5_data/weight_matrix.npy")
 
-forward_model = ERA5_C_FORWARD(config)
+forward_model = ERA5_C_FORWARD()
 for i in range(config.num_epochs // config.decay_step):
     batch_size = config.batch_size 
     num_epochs = config.decay_step
@@ -64,7 +64,7 @@ obs_data_save_path = '../../data/ERA5_data/train_seq_obs.h5'
 da_dataset = ERA5_DA_Dataset(state_data_path=data_save_path, 
                              obs_data_path=obs_data_save_path,
                              history_len=config.history_len)
-inverse_model = ERA5_C_INVERSE(config)
+inverse_model = ERA5_C_INVERSE()
 inverse_model.K_S = forward_model.K_S
 inverse_model.K_S_preimage = forward_model.K_S_preimage
 

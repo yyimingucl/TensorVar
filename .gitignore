@@ -14,3 +14,4 @@ model/__pycache__/
 model/utils/__pycache__/
 *.pt
 *.pth
+*.zip
