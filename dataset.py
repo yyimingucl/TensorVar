@@ -85,7 +85,7 @@ class DA_Dynamics_Dataset(Dataset):
         return pre_seq, post_seq
 
 class ERA5_Dynamics_Dataset(Dataset):
-    def __init__(self, data_path:str, seq_length:int=8, *args, **kwargs):
+    def __init__(self, data_path:str, seq_length:int=8, max_val=None, min_val=None, *args, **kwargs):
         super(ERA5_Dynamics_Dataset, self).__init__(*args, **kwargs)
         """
         :param np.ndarray state_background: [batch_size, state_dim]
@@ -93,10 +93,16 @@ class ERA5_Dynamics_Dataset(Dataset):
         state = h5py.File(data_path, 'r')["data"]
         self.num_steps, self.W, self.H, self.C = state.shape
         
-        max_value = np.max(state, axis=(0,1,2))
-        min_value = np.min(state, axis=(0,1,2))
-        self.max_value = max_value
-        self.min_value = min_value
+        if max_val is None:
+            max_value = np.max(state, axis=(0,1,2))
+            self.max_value = torch.from_numpy(max_value)
+        else:
+            self.max_value = torch.from_numpy(max_val)
+        if min_val is None:
+            min_value = np.min(state, axis=(0,1,2))
+            self.min_value = torch.from_numpy(min_value)
+        else:
+            self.min_value = torch.from_numpy(min_val)
         
         self.seq_length = seq_length
         
@@ -128,14 +134,21 @@ class ERA5_Dynamics_Dataset(Dataset):
         return (x - min_value) / (max_value - min_value)
     
     def denormalizer(self):
-        min_value = self.min_value.reshape(1, -1, 1, 1)
-        max_value = self.max_value.reshape(1, -1, 1, 1)
         def denormalize(x):
-            return x * (max_value - min_value) + min_value
+            min_value = self.min_value.reshape(1, -1, 1, 1)
+            max_value = self.max_value.reshape(1, -1, 1, 1)
+            try:
+                de_x = x * (max_value - min_value) + min_value
+            except:
+                min_value = min_value.numpy()
+                max_value = max_value.numpy()
+                de_x = x * (max_value - min_value) + min_value
+            return de_x
         return denormalize
 
 class ERA5_DA_Dataset(Dataset):
-    def __init__(self, state_data_path:str, obs_data_path:str, history_len=5, *args, **kwargs):
+    def __init__(self, state_data_path:str, obs_data_path:str, history_len=5, 
+                 max_val=None, min_val=None, *args, **kwargs):
         super(ERA5_DA_Dataset, self).__init__(*args, **kwargs)
         """
         :param np.ndarray state_background: [batch_size, state_dim]
@@ -155,11 +168,17 @@ class ERA5_DA_Dataset(Dataset):
                 obs = h5py.File(obs_data_path, 'r')["test_data"]
             except:
                 obs = h5py.File(obs_data_path, 'r')["data"]
-        
-        max_value = np.max(state, axis=(0,1,2))
-        min_value = np.min(state, axis=(0,1,2))
-        self.max_value = torch.from_numpy(max_value)
-        self.min_value = torch.from_numpy(min_value)
+        if max_val is None:
+            max_value = np.max(state, axis=(0,1,2))
+            self.max_value = torch.from_numpy(max_value)
+        else:
+            self.max_value = torch.from_numpy(max_val)
+        if min_val is None:
+            min_value = np.min(state, axis=(0,1,2))
+            self.min_value = torch.from_numpy(min_value)
+        else:
+            self.min_value = torch.from_numpy(min_val)
+
         
         self.num_data = self.num_steps - self.history_len
         self.create_data_set(obs, state)
