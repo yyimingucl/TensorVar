@@ -163,7 +163,10 @@ def train_forward_model(forward_model:Module,
             print(f"[INFO] Saving model with loss: {np.mean(all_loss):.4f} at {model_save_folder}")
             loss_max = np.mean(all_loss)
             forward_model.save_model(model_save_folder)
-            forward_model.save_C_fwd(model_save_folder, C_fwd)
+            try:
+                forward_model.save_C_fwd(model_save_folder, C_fwd)
+            except:
+                forward_model.save_C_forward(model_save_folder, C_fwd)
             forward_model.to(device)
     return train_loss
 
