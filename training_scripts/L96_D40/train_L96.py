@@ -21,7 +21,7 @@ from utils import dict2namespace
 cur_path = os.path.abspath(__file__)
 model_save_folder = 'model_weights'
 
-device = "cuda:1" if torch.cuda.is_available() else "cpu"
+device = "cuda" if torch.cuda.is_available() else "cpu"
 print("[INFO] Using {} device".format(device))
 print("[INFO] ", torch.cuda.get_device_properties(0) if torch.cuda.is_available() else 'CPU')
 
@@ -55,6 +55,7 @@ forward_model.load_state_dict(torch.load(model_save_folder + '/' + 'forward_mode
 forward_model.C_fwd = torch.load(model_save_folder + '/' + 'C_fwd.pt')
 forward_model.to(device)
 dynamics_dataset = DA_Dynamics_Dataset(state=seq_state, seq_length=1)
+forward_model.compute_z_b(dynamics_dataset, device=device, save_path=model_save_folder)
 forward_model.compute_Q_B(dynamics_dataset, device=device, save_path=model_save_folder)
 del dynamics_dataset
 
