@@ -55,10 +55,6 @@ conda activate tensor-var
 ``` pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121``` 
 
 
-## License
-
-This project is licensed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
-
 
 ## Contact
 For questions and feedback, feel free to reach out: Yiming Yang (zcahyy1@ucl.ac.uk)
