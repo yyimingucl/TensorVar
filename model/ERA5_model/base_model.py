@@ -1,10 +1,3 @@
-'''
-file:          base_model.py
-author:        yyimingucl <yyiming3@gmail>
-date:          2024-06-21 18:38:41
-description:   Base model for RKHS_DA
-'''
-
 import torch 
 import torch.nn as nn
 import torch.nn.functional as F
