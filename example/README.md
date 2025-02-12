@@ -1,6 +1,6 @@
 ## Examples 
 
-This folder provides several examples in our experiments. The pre-trained model weights to run the notebook can be found in:
+This folder provides several examples in our experiments. The pre-trained model weights to run the notebook can be found:
 |   |URL|
 |---------|---------|
 | Lorenz-96 (D=40) |[Download](https://drive.google.com/file/d/1hRPoOl0KL_qBVDwvYW8CtjHfUYP-7kD1/view?usp=drive_link) |
