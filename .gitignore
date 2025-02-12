@@ -15,3 +15,5 @@ model/utils/__pycache__/
 *.pt
 *.pth
 *.zip
+*.h5
+*.npy
