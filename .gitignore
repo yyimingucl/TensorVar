@@ -1,0 +1,14 @@
+*.png
+*.pyc
+*.pyo
+*.swp
+__pycache__/
+*.egg-info/
+dist/
+data/__pycache__/
+var_opt/__pycache__/
+var_opt/test/__pycache__/
+train/__pycache__/
+example/__pycache__/
+model/__pycache__/
+model/utils/__pycache__/
