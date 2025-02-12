@@ -1,0 +1,23 @@
+name: tensor-var  
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9.20  
+  - numpy
+  - pandas
+  - matplotlib
+  - scipy
+  - scikit-learn
+  - torch  
+  - torchvision  
+  - torchaudio
+  - tqdm
+  - pip
+  - h5py
+  - cvxpy
+  - einops
+  - jax 
+  - jaxlib
+  - diffax
+  - jaxopt
